@@ -1,0 +1,61 @@
+[
+  {
+    "Id": 1,
+    "value": "IMA",
+    "declarationTypeCodeDescription": "Standard customs declaration (Import not EFTA) - Goods arrived"
+  },
+  {
+    "Id": 1,
+    "value": "IMB",
+    "declarationTypeCodeDescription": "Standard customs declaration (Import not EFTA) - Goods arrived"
+  },
+  {
+    "Id": 1,
+    "value": "IMD",
+    "declarationTypeCodeDescription": "Standard customs declaration (Import not EFTA) - Goods arrived"
+  },
+  {
+    "Id": 1,
+    "value": "COB",
+    "declarationTypeCodeDescription": "Simplified declaration on an occasional basis (Trade new Member States) - Goods arrived"
+  },
+  {
+    "Id": 1,
+    "value": "COE",
+    "declarationTypeCodeDescription": "Simplified declaration on an occasional basis (Trade new Member States) - Goods not arrived"
+  },
+  {
+    "Id": 1,
+    "value": "COX",
+    "declarationTypeCodeDescription": "Supplementary declaration covered by types B and E (Trade new Member States) - Goods arrived"
+  },
+
+  {
+    "Id": 1,
+    "value": "IMB",
+    "declarationTypeCodeDescription": "Simplified declaration on an occasional basis (Import not EFTA) - Goods arrived"
+  },
+
+  {
+    "Id": 1,
+    "value": "IME",
+    "declarationTypeCodeDescription": "Simplified declaration on an occasional basis (Import not EFTA) - Goods not arrived"
+  },
+
+  {
+    "Id": 1,
+    "value": "IMF",
+    "declarationTypeCodeDescription": "Simplified declaration with regular use (pre-authorised) (Import not EFTA) - Goods not arrived"
+  },
+
+  {
+    "Id": 1,
+    "value": "C21",
+    "declarationTypeCodeDescription": "(Import not EFTA) Goods not arrived"
+  },
+  {
+    "Id": 1,
+    "value": "ROS",
+    "declarationTypeCodeDescription": "Supplementary declaration covered by types C and F (Import not EFTA) - Goods arrived"
+  }
+  ]
