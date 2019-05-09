@@ -12,13 +12,13 @@ import { GetdataService } from '../service/getdata.service';
 export class LookupdialogComponent implements OnInit {
   cache: Country[];
   rows: Country[];
+  bobs: string[];
+
 
   myGroup: FormGroup;
 
   codeFilter: string;
   nameFilter: string;
-
-  sorts: any;
 
   constructor(
     private getDataService: GetdataService,
@@ -45,8 +45,6 @@ export class LookupdialogComponent implements OnInit {
       this.nameFilter = val;
       this.applyAllFilters();
     });
-
-    this.sorts = [{ prop: 'code', dir: 'asc' }];
 
   }
 
