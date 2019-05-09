@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Declarationtype } from '../model/declarationtypes';
-import { Observable, Subject, combineLatest } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { State } from '../model/state';
 import { Country } from '../model/country';
-import { MatAutocompleteTrigger, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatAutocompleteTrigger, MatDialog } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { GetdataService } from '../service/getdata.service';
 import { map } from 'rxjs/internal/operators/map';
-import { startWith, debounceTime, switchMap, filter } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { LookupdialogComponent } from '../lookupdialog/lookupdialog.component';
-import { sortBy } from 'lodash-es';
 
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -98,7 +97,7 @@ export class ControlsComponent implements OnInit {
 
   private applyAllFilters = () => {
     let rows;
-    
+
     this.getDataService.getAllCountries().subscribe(data => {
       return (this.countries = data);
     });
