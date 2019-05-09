@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { catchError, tap, map, delay } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 import { Country } from '../model/country';
 import { Declarationtype } from '../model/declarationtypes';
 import { State } from '../model/state';
+
+// Configure the amount of latency and jitter to simulate
+const apiLatency = 100;
+
+// Set to 3000 to see that out-of-order replies don't cause any problem:
+const apiJitter = 100;
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +40,26 @@ export class GetdataService {
     return this.http.get<Country[]>(countries).pipe(
       tap(this.doGetCountries()),
       catchError(this.handleError));
+  }
 
+  getList(searchText: string): Observable<Country[]> {
+    const countries = '../../assets/api/countries.json';
+
+    // One of several ways to set up HTTP request URL parameters
+    // without concatenating them manually.
+    const params = new HttpParams()
+      .set('q', searchText)
+      .set('_limit', '20');
+
+    return this.http.get<Country[]>(countries, {params})
+      .pipe(delay(this.randomDelay()));
 
   }
+
+  randomDelay() {
+    return Math.round(apiLatency + Math.random() * apiJitter);
+  }
+
  private doGetCountries(): (x: Country[]) => void {
     return data =>
     console.log(

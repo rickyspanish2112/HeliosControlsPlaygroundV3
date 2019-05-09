@@ -22,8 +22,8 @@ export const _filter = (opt: string[], value: string): string[] => {
   styleUrls: ['./controls.component.scss']
 })
 export class ControlsComponent implements OnInit {
-
   errorMessage: string;
+  toggleLookupElement = false;
 
   declarationTypes$: Observable<Declarationtype[]>;
   declarationTypes: Declarationtype[] = [];
@@ -33,18 +33,25 @@ export class ControlsComponent implements OnInit {
   selectedCountry: Country;
   selectedCountryName: string;
 
-
   typeCtrl = new FormControl();
   stateForm: FormGroup = this.fb.group({
     stateGroup: ''
+  });
+
+  countryLookupDialogForm = new FormControl();
+  countryLookupFormGroup: FormGroup = this.fb.group({
+    countryLookupFormGroup: ''
   });
 
   countryCtrl = new FormControl();
 
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
-  constructor(private getDataService: GetdataService,
-              private fb: FormBuilder, private dialog: MatDialog) { }
+  constructor(
+    private getDataService: GetdataService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getDeclarationTypes();
@@ -59,12 +66,11 @@ export class ControlsComponent implements OnInit {
     );
 
     this.stateGroupsOptions$ = this.stateForm
-    .get('stateGroup')
-    .valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterGroup(value))
-    );
-
+      .get('stateGroup')
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => this.filterGroup(value))
+      );
   }
 
   private filteredTypes(value: string): Declarationtype[] {
@@ -87,7 +93,7 @@ export class ControlsComponent implements OnInit {
     });
   }
 
-    filterGroup(value: any): any {
+  filterGroup(value: any): any {
     if (value) {
       return this.stateGroups
         .map(group => ({
@@ -97,7 +103,6 @@ export class ControlsComponent implements OnInit {
         .filter(group => group.names.length > 0);
     }
   }
-
 
   onCountryCodeChanged(value: string) {
     const country = this.countries.find(x => x.code === value);
@@ -115,7 +120,7 @@ export class ControlsComponent implements OnInit {
     });
   }
 
-  openLookupDialog(event: any): void  {
+  openLookupDialog(event: any): void {
     if (event.target.value !== '?') {
       return;
     }
@@ -123,6 +128,18 @@ export class ControlsComponent implements OnInit {
     this.dialog.open(LookupdialogComponent, {
       width: '450px'
     });
+  }
+
+  toggleLookup(event: any): void {
+    if (event.target.value !== '?') {
+      return;
+    }
+
+    this.toggleLookupElement = true;
+  }
+
+  clearAll = () => {
+    this.countryLookupFormGroup.reset();
   }
 
 }
