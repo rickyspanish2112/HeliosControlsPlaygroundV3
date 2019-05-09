@@ -1,119 +1,84 @@
 <label><em>Un-constrained drop down box</em></label>
 <form class="declarationType">
   <mat-form-field class="mat-form-field">
-    <input
-      matInput
-      aria-label="State"
-      [matAutocomplete]="auto"
-      [formControl]="typeCtrl"
-      class="unConstrainedDropdown"
-    />
+    <input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="typeCtrl" class="unConstrainedDropdown">
     <mat-autocomplete #auto="matAutocomplete" [panelWidth]="700">
-      <mat-option
-        *ngFor="let type of declarationTypes$ | async"
-        [value]="type.value"
-      >
-        <span>{{ type.value }}</span> |
-        <small>{{ type.declarationTypeCodeDescription }}</small>
+      <mat-option  *ngFor="let type of declarationTypes$ | async" [value]="type.value">
+        <span>{{type.value}}</span> |
+        <small>{{type.declarationTypeCodeDescription}}</small>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-</form>
+  </form>
 
-<form [formGroup]="stateForm" class="countryGroup">
-  <mat-form-field class="countryGroup">
-    <input
-      class="unConstrainedDropdown"
-      type="text"
-      matInput
-      formControlName="stateGroup"
-      required
-      [matAutocomplete]="autoGroup"
-    />
-    <mat-autocomplete #autoGroup="matAutocomplete">
-      <mat-optgroup
-        *ngFor="let group of stateGroupsOptions$ | async"
-        [label]="group.letter"
-      >
-        <mat-option
-          *ngFor="let name of group.names"
-          [value]="name"
-          class="comboBox"
-        >
-          {{ name }}
-        </mat-option>
-      </mat-optgroup>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+  <form [formGroup]="stateForm" class="countryGroup">
+    <mat-form-field class="countryGroup">
+      <input class="unConstrainedDropdown" type="text" matInput formControlName="stateGroup" required [matAutocomplete]="autoGroup">
+        <mat-autocomplete #autoGroup="matAutocomplete">
+          <mat-optgroup *ngFor="let group of stateGroupsOptions$ | async" [label]="group.letter">
+            <mat-option *ngFor="let name of group.names" [value]="name" class="comboBox">
+              {{name}}
+            </mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 
-<br />
+  <br>
 
 <label><em>Constrained drop down box</em></label>
 <form>
   <mat-form-field class="countryCode">
-    <mat-select
-      [(value)]="selectedCountry"
-      (selectionChange)="onCountryCodeChanged(selectedCountry)"
-    >
-      <mat-option *ngFor="let country of countries" [value]="country.code">{{
-        country.code
-      }}</mat-option>
+    <mat-select [(value)]="selectedCountry" (selectionChange)="onCountryCodeChanged(selectedCountry)">
+      <mat-option *ngFor=" let country of countries"
+      [value]="country.code" >{{country.code}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field style="width:100px;">
-    <input
-      cdkOverlayOrigin
-      #tortelliniOrigin
-      matInput
-      disabled
-      value="{{ selectedCountryName }}"
-      class="readOnlyControl"
-    />
-  </mat-form-field>
-</form>
+    <mat-form-field style="width:100px;">
+      <input cdkOverlayOrigin #tortelliniOrigin matInput disabled value={{selectedCountryName}} class="readOnlyControl">
+    </mat-form-field>
+  </form>
 
-<label><em>Lookup</em></label>
+  <label><em>Lookup</em></label>
 
-<form [formGroup]="stateForm" class="countryGroup">
-  <input
-    matInput
-    aria-label="State"
-    [formControl]="countryCtrl"
-    (keyup)="openLookupDialog($event)"
-    class="lookup-input"
-  />
-</form>
+  <form [formGroup]="stateForm" class="countryGroup">
+  <input matInput aria-label="State"  [formControl]="countryCtrl" (keyup)="openLookupDialog($event)" class="lookup-input">
+  </form>
 
-<br />
+  <br>
 
-<form [formGroup]="countryLookupDialogForm" class="countryGroup">
-  <input
-    matInput
-    aria-label="State"
-    [formControl]="countryLookupDialogForm"
-    (keyup)="toggleLookup($event)"
-    class="lookup-input"
-  />
-  <div *ngIf="toggleLookupElement" class="countryLookup">
-    <div
-      style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
-      [formGroup]="countryLookupFormGroup"
+  <form [formGroup]="countryLookupDialogForm" class="countryGroup">
+    <input matInput aria-label="State"  [formControl]="countryLookupDialogForm" (keyup)="toggleLookup($event)" class="countryLookup">
+    <div *ngIf="toggleLookupElement" class="countryLookup">
+<div
+  style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
+  [formGroup]="countryLookupFormGroup"
+>
+  <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+  &nbsp;
+  <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+  &nbsp;
+  <button (click)="clearAll()">X</button>
+</div>
+<cdk-virtual-scroll-viewport
+  itemSize="0"
+  style="min-height: 100px;"
+>
+  <table style="width: 100%; margin-top: -20px;">
+    <ng-container
+      *cdkVirtualFor ="let row of rows"
     >
-      <input
-        formControlName="countryCodeFC"
-        type="text"
-        placeholder="Country Code Filter"
-      />
-      &nbsp;
-      <input
-        formControlName="countryNameFC"
-        type="text"
-        placeholder="Country Name Filter"
-      />
-      &nbsp;
-      <button (click)="clearAll()">X</button>
+      <tr style="width:100%; min-height: 30px;">
+        <td>{{row.code}}</td>
+        <td>{{row.name}}</td>
+      </tr>
+    </ng-container>
+  </table>
+</cdk-virtual-scroll-viewport>
+<mat-dialog-actions>
+  <button mat-button color="primary">OK</button>
+  <button mat-button color="primary">Cancel</button>
+</mat-dialog-actions>
     </div>
-  </div>
-</form>
+    </form>

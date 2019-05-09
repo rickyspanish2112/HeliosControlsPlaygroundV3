@@ -42,20 +42,6 @@ export class GetdataService {
       catchError(this.handleError));
   }
 
-  getList(searchText: string): Observable<Country[]> {
-    const countries = '../../assets/api/countries.json';
-
-    // One of several ways to set up HTTP request URL parameters
-    // without concatenating them manually.
-    const params = new HttpParams()
-      .set('q', searchText)
-      .set('_limit', '20');
-
-    return this.http.get<Country[]>(countries, {params})
-      .pipe(delay(this.randomDelay()));
-
-  }
-
   randomDelay() {
     return Math.round(apiLatency + Math.random() * apiJitter);
   }

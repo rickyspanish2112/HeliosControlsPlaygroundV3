@@ -15,10 +15,11 @@
   style="height: 300px;"
 >
   <table style="width: 100%;">
+    
     <ng-container
       *cdkVirtualFor ="let row of rows"
     >
-      <tr style="width:100%; min-height: 30px;">
+      <tr style="width:100%;">
         <td><mat-radio-button></mat-radio-button></td>
         <td>{{row.code}}</td>
         <td>{{row.name}}</td>

@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Declarationtype } from '../model/declarationtypes';
-import { Observable } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { State } from '../model/state';
 import { Country } from '../model/country';
-import { MatAutocompleteTrigger, MatDialog } from '@angular/material';
+import { MatAutocompleteTrigger, MatDialog, MatTableDataSource } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { GetdataService } from '../service/getdata.service';
 import { map } from 'rxjs/internal/operators/map';
-import { startWith } from 'rxjs/operators';
+import { startWith, debounceTime, switchMap, filter } from 'rxjs/operators';
 import { LookupdialogComponent } from '../lookupdialog/lookupdialog.component';
+import { sortBy } from 'lodash-es';
 
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -33,6 +34,12 @@ export class ControlsComponent implements OnInit {
   selectedCountry: Country;
   selectedCountryName: string;
 
+  filteredList: Observable<Country[]>;
+  selectedId = new Subject<number>();
+  selectedCountryLookup: Observable<Country>;
+  codeFilter: string;
+  nameFilter: string;
+
   typeCtrl = new FormControl();
   stateForm: FormGroup = this.fb.group({
     stateGroup: ''
@@ -40,10 +47,13 @@ export class ControlsComponent implements OnInit {
 
   countryLookupDialogForm = new FormControl();
   countryLookupFormGroup: FormGroup = this.fb.group({
-    countryLookupFormGroup: ''
+    countryCodeFC: '',
+    countryNameFC: ''
   });
 
   countryCtrl = new FormControl();
+  cache: Country[];
+  rows: Country[];
 
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
@@ -58,6 +68,19 @@ export class ControlsComponent implements OnInit {
     this.getStates();
     this.getCountries();
 
+    this.countryLookupFormGroup.get('countryCodeFC').valueChanges
+    .subscribe(val => {
+      this.codeFilter = val;
+
+      this.applyAllFilters();
+    });
+
+    this.countryLookupFormGroup.get('countryNameFC').valueChanges
+    .subscribe(val => {
+      this.nameFilter = val;
+      this.applyAllFilters();
+    });
+
     this.declarationTypes$ = this.typeCtrl.valueChanges.pipe(
       map(type =>
         // type ? this.filteredTypes(type) : this.declarationTypes.slice()
@@ -71,6 +94,24 @@ export class ControlsComponent implements OnInit {
         startWith(''),
         map(value => this.filterGroup(value))
       );
+  }
+
+  private applyAllFilters = () => {
+    let rows;
+    
+    this.getDataService.getAllCountries().subscribe(data => {
+      return (this.countries = data);
+    });
+
+    if (!!this.codeFilter) {
+      rows = this.countries.filter(r => r.code.toLowerCase().startsWith(this.codeFilter.toLowerCase()));
+    }
+
+    if (!!this.nameFilter) {
+      rows = this.countries.filter(r => r.name.toLowerCase().startsWith(this.nameFilter.toLowerCase()));
+    }
+
+    this.rows = rows;
   }
 
   private filteredTypes(value: string): Declarationtype[] {
