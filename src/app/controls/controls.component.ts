@@ -3,7 +3,7 @@ import { Declarationtype } from '../model/declarationtypes';
 import { Observable, Subject } from 'rxjs';
 import { State } from '../model/state';
 import { Country } from '../model/country';
-import { MatAutocompleteTrigger, MatDialog } from '@angular/material';
+import { MatAutocompleteTrigger, MatDialog, MatTableDataSource } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { GetdataService } from '../service/getdata.service';
 import { map } from 'rxjs/internal/operators/map';
@@ -53,8 +53,10 @@ export class ControlsComponent implements OnInit {
   countryCtrl = new FormControl();
   cache: Country[];
   rows: Country[];
+  displayedColumns = ['code', 'name'];
+  dataSource = new MatTableDataSource(this.rows);
 
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+ // @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
   constructor(
     private getDataService: GetdataService,
@@ -110,7 +112,7 @@ export class ControlsComponent implements OnInit {
       rows = this.countries.filter(r => r.name.toLowerCase().startsWith(this.nameFilter.toLowerCase()));
     }
 
-    this.rows = rows;
+    this.dataSource = rows;
   }
 
   private filteredTypes(value: string): Declarationtype[] {
@@ -180,6 +182,10 @@ export class ControlsComponent implements OnInit {
 
   clearAll = () => {
     this.countryLookupFormGroup.reset();
+  }
+
+  closeLookup() {
+    this.toggleLookupElement = false;
   }
 
 }

@@ -45,31 +45,50 @@
   <form [formGroup]="stateForm" class="countryGroup">
   <input matInput aria-label="State"  [formControl]="countryCtrl" (keyup)="openLookupDialog($event)" class="lookup-input">
   </form>
-
   <br>
 
   <form [formGroup]="countryLookupDialogForm" class="countryGroup">
     <input matInput aria-label="State"  [formControl]="countryLookupDialogForm" (keyup)="toggleLookup($event)" class="countryLookup">
     <div *ngIf="toggleLookupElement" class="countryLookup">
-<div
-  style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
-  [formGroup]="countryLookupFormGroup"
->
-  <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
-  &nbsp;
-  <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
-  &nbsp;
-  <button (click)="clearAll()">X</button>
-</div>
-  <table style="width: 100%;" *ngFor="let row of rows">
-      <tr style="width:100%; min-height: 30px;">
-        <td>{{row.code}}</td>
-        <td>{{row.name}}</td>
-      </tr>
-  </table>
-<mat-dialog-actions>
-  <button mat-button color="primary">OK</button>
-  <button mat-button color="primary">Cancel</button>
-</mat-dialog-actions>
-    </div>
+
+        <div class="example-container mat-elevation-z8">
+
+            <div style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
+            [formGroup]="countryLookupFormGroup"
+          >
+            <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+            &nbsp;
+            <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+            &nbsp;
+            <button (click)="clearAll()">X</button>
+          </div>
+
+          <mat-table #table [dataSource]="dataSource" >
+
+            <!-- Code Column -->
+            <ng-container matColumnDef="code">
+              <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="tableCell"> {{element.code}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-dialog-actions>
+            <button mat-button color="primary">OK</button>
+            <button mat-button color="primary" (click)="closeLookup()">Cancel</button>
+          </mat-dialog-actions>
+          </div>
+
+
+        </div>
+
+
+
     </form>
