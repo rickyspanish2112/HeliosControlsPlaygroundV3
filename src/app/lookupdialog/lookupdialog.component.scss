@@ -1,3 +1,31 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+  margin-top: -30px;
+  height: 200px;
+}
+
+.tableCell {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+}
+
+.tableHeader {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.matHeaderRow {
+  margin-top: 10px;
+}
+
 .element-row {
   cursor: pointer;
 }

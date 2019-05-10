@@ -1,4 +1,7 @@
 <h2>Country Lookup</h2>
+
+<div class="example-container mat-elevation-z8">
+
 <div
   style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
   [formGroup]="countryLookupFormGroup"
@@ -28,11 +31,12 @@
     <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+  <mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="matHeaderRow"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
   </mat-row>
 </mat-table>
 </cdk-virtual-scroll-viewport>
 <mat-dialog-actions>
-  <button mat-button color="primary" (click)="onCancel()" style="float: right;">Cancel</button>
+  <button mat-button color="primary" (click)="onCancel()" style="float: right; margin-bottom: 10px;">Cancel</button>
 </mat-dialog-actions>
+</div>
