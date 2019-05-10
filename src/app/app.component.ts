@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'HeliosControlsPlaygroundV3';
+  title = 'Helios Controls Playground V3';
 }
