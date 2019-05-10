@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import { Country } from '../model/country';
 import { GetdataService } from '../service/getdata.service';
+import { MatTableDataSource, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-lookupdialog',
@@ -10,67 +11,69 @@ import { GetdataService } from '../service/getdata.service';
   styleUrls: ['./lookupdialog.component.scss']
 })
 export class LookupdialogComponent implements OnInit {
-  cache: Country[];
   rows: Country[];
-  bobs: string[];
+  countries: Country[] = [];
+  displayedColumns = ['code', 'name'];
+  dataSource = new MatTableDataSource(this.rows);
+  countryLookupInput: string;
 
-
-  myGroup: FormGroup;
+  countryLookupDialogForm = new FormControl();
+  countryLookupFormGroup: FormGroup = this.fb.group({
+    countryCodeFC: '',
+    countryNameFC: ''
+  });
 
   codeFilter: string;
   nameFilter: string;
 
   constructor(
     private getDataService: GetdataService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<LookupdialogComponent>
+  ) { }
 
   ngOnInit() {
-    this.getCountries();
+    this.countryLookupFormGroup.get('countryCodeFC').valueChanges
+      .subscribe(val => {
+        this.codeFilter = val;
+        this.applyAllFilters();
+      });
 
-    this.myGroup = this.fb.group({
-      countryCodeFC: '',
-      countryNameFC: ''
-    });
-
-
-    this.myGroup.get('countryCodeFC').valueChanges
-    .subscribe(val => {
-      this.codeFilter = val;
-      this.applyAllFilters();
-    });
-
-    this.myGroup.get('countryNameFC').valueChanges
-    .subscribe(val => {
-      this.nameFilter = val;
-      this.applyAllFilters();
-    });
+    this.countryLookupFormGroup.get('countryNameFC').valueChanges
+      .subscribe(val => {
+        this.nameFilter = val;
+        this.applyAllFilters();
+      });
 
   }
 
   private applyAllFilters = () => {
-    let rows = this.cache;
+    let rows;
+
+    this.getDataService.getAllCountries().subscribe(data => {
+      return (this.countries = data);
+    });
 
     if (!!this.codeFilter) {
-      rows = rows.filter(r => r.code.toLowerCase().startsWith(this.codeFilter.toLowerCase()));
+      rows = this.countries.filter(r => r.code.toLowerCase().startsWith(this.codeFilter.toLowerCase()));
     }
 
     if (!!this.nameFilter) {
-      rows = rows.filter(r => r.name.toLowerCase().startsWith(this.nameFilter.toLowerCase()));
+      rows = this.countries.filter(r => r.name.toLowerCase().startsWith(this.nameFilter.toLowerCase()));
     }
-
-    this.rows = rows;
-  }
-
-  getCountries() {
-    this.getDataService.getAllCountries().subscribe(data => {
-      this.cache = data;
-      this.rows = [...this.cache];
-    });
+    this.dataSource = rows;
   }
 
   clearAll = () => {
-    this.myGroup.reset();
+    this.countryLookupFormGroup.reset();
+  }
+
+  onCancel() {
+    this.dialogRef.close(true);
+  }
+
+  cellClicked(element) {
+    this.countryLookupInput = element.name;
   }
 
 }

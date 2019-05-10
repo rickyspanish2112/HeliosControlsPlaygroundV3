@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Declarationtype } from '../model/declarationtypes';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { State } from '../model/state';
 import { Country } from '../model/country';
-import { MatAutocompleteTrigger, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { GetdataService } from '../service/getdata.service';
 import { map } from 'rxjs/internal/operators/map';
@@ -24,7 +24,6 @@ export const FILTER = (opt: string[], value: string): string[] => {
 export class ControlsComponent implements OnInit {
   errorMessage: string;
   toggleLookupElement = false;
-
   declarationTypes$: Observable<Declarationtype[]>;
   declarationTypes: Declarationtype[] = [];
   stateGroupsOptions$: Observable<State[]>;
@@ -32,12 +31,9 @@ export class ControlsComponent implements OnInit {
   countries: Country[] = [];
   selectedCountry: Country;
   selectedCountryName: string;
-
-  filteredList: Observable<Country[]>;
-  selectedId = new Subject<number>();
-  selectedCountryLookup: Observable<Country>;
   codeFilter: string;
   nameFilter: string;
+  countryLookupInput: string;
 
   typeCtrl = new FormControl();
   stateForm: FormGroup = this.fb.group({
@@ -55,10 +51,6 @@ export class ControlsComponent implements OnInit {
   rows: Country[];
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
-
-  countryLookupInput: string;
-
-  // @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
   constructor(
     private getDataService: GetdataService,
@@ -86,7 +78,6 @@ export class ControlsComponent implements OnInit {
 
     this.declarationTypes$ = this.typeCtrl.valueChanges.pipe(
       map(type =>
-        // type ? this.filteredTypes(type) : this.declarationTypes.slice()
         this.filteredTypes(type)
       )
     );
@@ -137,7 +128,7 @@ export class ControlsComponent implements OnInit {
     });
   }
 
-  filterGroup(value: any): any {
+ private filterGroup(value: any): any {
     if (value) {
       return this.stateGroups
         .map(group => ({
