@@ -44,7 +44,7 @@
 
 <form [formGroup]="stateForm" class="countryGroup">
   <input matInput aria-label="State" [formControl]="countryCtrl" (keyup)="openLookupDialog($event)"
-    class="lookup-input">
+    class="lookup-input" [(ngModel)]="countryModalDialogLookupInput">
 </form>
 <br>
 

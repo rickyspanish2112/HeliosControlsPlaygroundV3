@@ -34,6 +34,7 @@ export class ControlsComponent implements OnInit {
   codeFilter: string;
   nameFilter: string;
   countryLookupInput: string;
+  countryModalDialogLookupInput: any;
 
   typeCtrl = new FormControl();
   stateForm: FormGroup = this.fb.group({
@@ -160,9 +161,17 @@ export class ControlsComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(LookupdialogComponent, {
-      width: '450px'
+    const dialogRef = this.dialog.open(LookupdialogComponent, {width: '450px'});
+    dialogRef.componentInstance.rowSelected.subscribe(result => {
+      this.doSetResult(result);
     });
+
+    dialogRef.afterClosed().subscribe(() => {
+      dialogRef.componentInstance.rowSelected.subscribe();
+    });
+  }
+  doSetResult(result: any) {
+    this.countryModalDialogLookupInput  = result;
   }
 
   toggleLookup(event: any): void {

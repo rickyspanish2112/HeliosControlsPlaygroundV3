@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import { Country } from '../model/country';
@@ -16,6 +16,8 @@ export class LookupdialogComponent implements OnInit {
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
   countryLookupInput: string;
+
+  @Output() rowSelected = new EventEmitter<any>();
 
   countryLookupDialogForm = new FormControl();
   countryLookupFormGroup: FormGroup = this.fb.group({
@@ -73,7 +75,8 @@ export class LookupdialogComponent implements OnInit {
   }
 
   cellClicked(element) {
-    this.countryLookupInput = element.name;
+    this.rowSelected.emit( element.name);
+    this.dialogRef.close(true);
   }
 
 }
