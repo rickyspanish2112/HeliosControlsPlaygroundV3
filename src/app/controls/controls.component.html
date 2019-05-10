@@ -3,92 +3,88 @@
   <mat-form-field class="mat-form-field">
     <input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="typeCtrl" class="unConstrainedDropdown">
     <mat-autocomplete #auto="matAutocomplete" [panelWidth]="700">
-      <mat-option  *ngFor="let type of declarationTypes$ | async" [value]="type.value">
+      <mat-option *ngFor="let type of declarationTypes$ | async" [value]="type.value">
         <span>{{type.value}}</span> |
         <small>{{type.declarationTypeCodeDescription}}</small>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  </form>
+</form>
 
-  <form [formGroup]="stateForm" class="countryGroup">
-    <mat-form-field class="countryGroup">
-      <input class="unConstrainedDropdown" type="text" matInput formControlName="stateGroup" required [matAutocomplete]="autoGroup">
-        <mat-autocomplete #autoGroup="matAutocomplete">
-          <mat-optgroup *ngFor="let group of stateGroupsOptions$ | async" [label]="group.letter">
-            <mat-option *ngFor="let name of group.names" [value]="name" class="comboBox">
-              {{name}}
-            </mat-option>
-        </mat-optgroup>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
+<form [formGroup]="stateForm" class="countryGroup">
+  <mat-form-field class="countryGroup">
+    <input class="unConstrainedDropdown" type="text" matInput formControlName="stateGroup" required
+      [matAutocomplete]="autoGroup">
+    <mat-autocomplete #autoGroup="matAutocomplete">
+      <mat-optgroup *ngFor="let group of stateGroupsOptions$ | async" [label]="group.letter">
+        <mat-option *ngFor="let name of group.names" [value]="name" class="comboBox">
+          {{name}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
 
-  <br>
+<br>
 
 <label><em>Constrained drop down box</em></label>
 <form>
   <mat-form-field class="countryCode">
     <mat-select [(value)]="selectedCountry" (selectionChange)="onCountryCodeChanged(selectedCountry)">
-      <mat-option *ngFor=" let country of countries"
-      [value]="country.code" >{{country.code}}</mat-option>
+      <mat-option *ngFor=" let country of countries" [value]="country.code">{{country.code}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-    <mat-form-field style="width:100px;">
-      <input cdkOverlayOrigin #tortelliniOrigin matInput disabled value={{selectedCountryName}} class="readOnlyControl">
-    </mat-form-field>
-  </form>
+  <mat-form-field style="width:100px;">
+    <input cdkOverlayOrigin #tortelliniOrigin matInput disabled value={{selectedCountryName}} class="readOnlyControl">
+  </mat-form-field>
+</form>
 
-  <label><em>Lookup</em></label>
+<label><em>Lookup</em></label>
 
-  <form [formGroup]="stateForm" class="countryGroup">
-  <input matInput aria-label="State"  [formControl]="countryCtrl" (keyup)="openLookupDialog($event)" class="lookup-input">
-  </form>
-  <br>
+<form [formGroup]="stateForm" class="countryGroup">
+  <input matInput aria-label="State" [formControl]="countryCtrl" (keyup)="openLookupDialog($event)"
+    class="lookup-input">
+</form>
+<br>
 
-  <form [formGroup]="countryLookupDialogForm" class="countryGroup">
-    <input matInput aria-label="State"  [formControl]="countryLookupDialogForm" (keyup)="toggleLookup($event)" class="countryLookup">
-    <div *ngIf="toggleLookupElement" class="countryLookup">
+<form [formGroup]="countryLookupDialogForm" class="countryGroup">
+  <input matInput aria-label="State" [(ngModel)]="countryLookupInput" [formControl]="countryLookupDialogForm"
+    (keyup)="toggleLookup($event)" class="countryLookup">
+  <div *ngIf="toggleLookupElement" class="countryLookup">
 
-        <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8">
 
-            <div style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
-            [formGroup]="countryLookupFormGroup"
-          >
-            <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
-            &nbsp;
-            <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
-            &nbsp;
-            <button (click)="clearAll()">X</button>
-          </div>
+      <div style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
+        [formGroup]="countryLookupFormGroup">
+        <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+        &nbsp;
+        <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+        &nbsp;
+        <button (click)="clearAll()">X</button>
+      </div>
 
-          <mat-table #table [dataSource]="dataSource" >
+      <mat-table #table [dataSource]="dataSource">
 
-            <!-- Code Column -->
-            <ng-container matColumnDef="code">
-              <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
-              <mat-cell *matCellDef="let element" class="tableCell"> {{element.code}} </mat-cell>
-            </ng-container>
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="tableCell"> {{element.code}} </mat-cell>
+        </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
-              <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
-            </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
+        </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-          <mat-dialog-actions>
-            <button mat-button color="primary">OK</button>
-            <button mat-button color="primary" (click)="closeLookup()">Cancel</button>
-          </mat-dialog-actions>
-          </div>
-
-
-        </div>
-
-
-
-    </form>
+        <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
+        </mat-row>
+      </mat-table>
+      <mat-dialog-actions>
+        <button mat-button color="primary" (click)="closeLookup()" style="float: right;">Cancel</button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</form>

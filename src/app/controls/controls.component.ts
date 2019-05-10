@@ -10,7 +10,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { startWith } from 'rxjs/operators';
 import { LookupdialogComponent } from '../lookupdialog/lookupdialog.component';
 
-export const _filter = (opt: string[], value: string): string[] => {
+export const FILTER = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
@@ -56,13 +56,15 @@ export class ControlsComponent implements OnInit {
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
 
- // @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+  countryLookupInput: string;
+
+  // @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
   constructor(
     private getDataService: GetdataService,
     private fb: FormBuilder,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getDeclarationTypes();
@@ -70,17 +72,17 @@ export class ControlsComponent implements OnInit {
     this.getCountries();
 
     this.countryLookupFormGroup.get('countryCodeFC').valueChanges
-    .subscribe(val => {
-      this.codeFilter = val;
+      .subscribe(val => {
+        this.codeFilter = val;
 
-      this.applyAllFilters();
-    });
+        this.applyAllFilters();
+      });
 
     this.countryLookupFormGroup.get('countryNameFC').valueChanges
-    .subscribe(val => {
-      this.nameFilter = val;
-      this.applyAllFilters();
-    });
+      .subscribe(val => {
+        this.nameFilter = val;
+        this.applyAllFilters();
+      });
 
     this.declarationTypes$ = this.typeCtrl.valueChanges.pipe(
       map(type =>
@@ -140,7 +142,7 @@ export class ControlsComponent implements OnInit {
       return this.stateGroups
         .map(group => ({
           letter: group.letter,
-          names: _filter(group.names, value)
+          names: FILTER(group.names, value)
         }))
         .filter(group => group.names.length > 0);
     }
@@ -186,6 +188,11 @@ export class ControlsComponent implements OnInit {
 
   closeLookup() {
     this.toggleLookupElement = false;
+  }
+
+  cellClicked(element) {
+    this.toggleLookupElement = false;
+    this.countryLookupInput = element.name;
   }
 
 }
