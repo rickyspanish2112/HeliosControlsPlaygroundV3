@@ -41,8 +41,10 @@ export class ControlsComponent implements OnInit {
     stateGroup: ''
   });
 
-  countryLookupDialogForm = new FormControl();
-  countryLookupFormGroup: FormGroup = this.fb.group({
+  countryLookupModalDialogForm = new FormControl();
+
+  countryLookupExpandingDialogForm = new FormControl();
+  countryLookupExpandingDialogFormGroup: FormGroup = this.fb.group({
     countryCodeFC: '',
     countryNameFC: ''
   });
@@ -64,14 +66,14 @@ export class ControlsComponent implements OnInit {
     this.getStates();
     this.getCountries();
 
-    this.countryLookupFormGroup.get('countryCodeFC').valueChanges
+    this.countryLookupExpandingDialogFormGroup.get('countryCodeFC').valueChanges
       .subscribe(val => {
         this.codeFilter = val;
 
         this.applyAllFilters();
       });
 
-    this.countryLookupFormGroup.get('countryNameFC').valueChanges
+    this.countryLookupExpandingDialogFormGroup.get('countryNameFC').valueChanges
       .subscribe(val => {
         this.nameFilter = val;
         this.applyAllFilters();
@@ -167,7 +169,7 @@ export class ControlsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      dialogRef.componentInstance.rowSelected.subscribe();
+      dialogRef.componentInstance.rowSelected.unsubscribe();
     });
   }
   doSetResult(result: any) {
@@ -183,7 +185,7 @@ export class ControlsComponent implements OnInit {
   }
 
   clearAll = () => {
-    this.countryLookupFormGroup.reset();
+    this.countryLookupExpandingDialogFormGroup.reset();
   }
 
   closeLookup() {

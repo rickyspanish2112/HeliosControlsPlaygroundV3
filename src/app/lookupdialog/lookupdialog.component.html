@@ -1,40 +1,37 @@
-<div class="lookupTitle">Country Lookup</div>
-<div class="example-container mat-elevation-z8">
-  <div
-    style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
-    [formGroup]="countryLookupFormGroup"
-    class="lookupFilter"
-  >
-  <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
-  &nbsp;
-  <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
-  &nbsp;
-  <button (click)="clearAll()">X</button>
-</div>
+<form [formGroup]="countryLookupDialogForm" class="countryGroup">
+  <div>
+    <div class="example-container mat-elevation-z8">
 
-<div>
-  <mat-table #table [dataSource]="dataSource">
+      <div style="background-color:lightblue; text-align:center; padding:12px 0; margin-bottom:24px"
+        [formGroup]="countryLookupFormGroup">
+        <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+        &nbsp;
+        <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+        &nbsp;
+        <button (click)="clearAll()">X</button>
+      </div>
 
-    <!-- Code Column -->
-    <ng-container matColumnDef="code">
-      <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="tableCell"> {{element.code}} </mat-cell>
-    </ng-container>
+      <mat-table #table [dataSource]="dataSource">
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
-    </ng-container>
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="tableCell"> {{element.code}} </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="matHeaderRow"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)" >
-    </mat-row>
-  </mat-table>
-</div>
-<div>
-<mat-dialog-actions>
-  <button mat-button color="primary" (click)="onCancel()" style="float: right; margin-bottom: 10px;">Cancel</button>
-</mat-dialog-actions>
-</div>
-</div>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
+        </mat-row>
+      </mat-table>
+      <mat-dialog-actions>
+        <button mat-button color="primary" (click)="onCancel()" style="float: right; margin-bottom: 10px;">Cancel</button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</form>
