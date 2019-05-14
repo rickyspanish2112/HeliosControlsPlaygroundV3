@@ -1,4 +1,4 @@
-<label><em>Un-constrained drop down box</em></label>
+<p><em>Un-constrained drop down box</em></p>
 <form class="declarationType">
   <mat-form-field class="mat-form-field">
     <input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="typeCtrl" class="unConstrainedDropdown">
@@ -27,7 +27,7 @@
 
 <br>
 
-<label><em>Constrained drop down box</em></label>
+<p><em>Constrained drop down box</em></p>
 <form>
   <mat-form-field class="countryCode">
     <mat-select [(value)]="selectedCountry" (selectionChange)="onCountryCodeChanged(selectedCountry)">
@@ -40,7 +40,7 @@
   </mat-form-field>
 </form>
 
-<label><em>Lookup</em></label>
+<p><em>Lookup</em></p>
 
 <!-- Modal dialog -->
 <form [formGroup]="countryLookupModalDialogForm" class="countryGroup">
@@ -90,3 +90,71 @@
     </div>
   </div>
 </form>
+
+<p><em>Grids</em></p>
+
+<form [formGroup]="countryLookupExpandingDialogForm" class="countryGroup">
+    <div class="countryLookup">
+      <div>
+        <mat-table #table [dataSource]="dataSource">
+
+          <!-- Code Column -->
+          <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef class="tableHeader"> Code </th>
+            <td mat-cell *matCellDef="let element" class="tableCell">
+                <input type="text" formControlName="from" placeholder="Code">
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
+            <td mat-cell *matCellDef="let element" class="tableCell">
+                <input type="text" formControlName="from" placeholder="Reference">
+            </td>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
+          </mat-row>
+        </mat-table>
+        <mat-dialog-actions>
+          <button mat-button color="primary" (click)="closeLookup()" style="float: right; margin-bottom: 10px;">Cancel</button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </form>
+
+<mat-grid-list
+    (responsiveColsChange)="cols = $event"
+      cols = {{cols}}
+      rowHeight="60"
+      gutterSize="6px">
+      <mat-grid-tile *ngFor="let folder of folders">
+        <a class="grid-list-item mat-body mat-elevation-z2"
+          mat-ripple>
+          <mat-icon>insert_drive_file</mat-icon>
+          <span class="flex-remain">{{folder.name}}</span>
+          <button mat-icon-button
+            [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu"
+            xPosition="before"
+            overlapTrigger="false">
+            <button mat-menu-item  (click)="alert('Previous document added');">
+              <mat-icon>add</mat-icon>
+              <span>Add</span>
+            </button>
+            <button mat-menu-item (click)="alert('Previous document deleted');">
+              <mat-icon>clear</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </a>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+
+

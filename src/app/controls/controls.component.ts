@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Declarationtype } from '../model/declarationtypes';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { State } from '../model/state';
 import { Country } from '../model/country';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, AbstractControl, FormArray } from '@angular/forms';
 import { GetdataService } from '../service/getdata.service';
 import { map } from 'rxjs/internal/operators/map';
 import { startWith } from 'rxjs/operators';
 import { LookupdialogComponent } from '../lookupdialog/lookupdialog.component';
+import { TableData } from './table-data.model';
 
 export const FILTER = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -55,6 +56,14 @@ export class ControlsComponent implements OnInit {
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
 
+  folders = [
+    { name: 'Previous Documents', link: '#1' }
+  ];
+
+  responsive = true;
+  cols = 1;
+
+
   constructor(
     private getDataService: GetdataService,
     private fb: FormBuilder,
@@ -65,6 +74,7 @@ export class ControlsComponent implements OnInit {
     this.getDeclarationTypes();
     this.getStates();
     this.getCountries();
+
 
     this.countryLookupExpandingDialogFormGroup.get('countryCodeFC').valueChanges
       .subscribe(val => {
@@ -91,6 +101,61 @@ export class ControlsComponent implements OnInit {
         startWith(''),
         map(value => this.filterGroup(value))
       );
+  }
+
+  onCountryCodeChanged(value: string) {
+    const country = this.countries.find(x => x.code === value);
+
+    if (country === null) {
+      this.selectedCountry.code = 'Unable to find country';
+    } else {
+      this.selectedCountryName = country.name;
+    }
+  }
+
+  toggleLookup(event: any): void {
+    if (event.target.value !== '?') {
+      return;
+    }
+
+    event.target.value = '';
+    this.toggleLookupElement = true;
+  }
+
+  openLookupDialog(event: any): void {
+    if (event.target.value !== '?') {
+      return;
+    }
+
+    event.target.value = '';
+
+    const dialogRef = this.dialog.open (LookupdialogComponent, {width: '450px'});
+    dialogRef.componentInstance.rowSelected.subscribe(result => {
+      this.doSetResult(result);
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      dialogRef.componentInstance.rowSelected.unsubscribe();
+    });
+  }
+
+  cellClicked(element) {
+    this.toggleLookupElement = false;
+    this.countryLookupInput = element.name;
+  }
+
+  clearAll = () => {
+    this.countryLookupExpandingDialogFormGroup.reset();
+  }
+
+  closeLookup() {
+    this.toggleLookupElement = false;
+  }
+
+  private getCountries() {
+    this.getDataService.getAllCountries().subscribe(data => {
+      return (this.countries = data);
+    });
   }
 
   private applyAllFilters = () => {
@@ -142,62 +207,12 @@ export class ControlsComponent implements OnInit {
     }
   }
 
-  onCountryCodeChanged(value: string) {
-    const country = this.countries.find(x => x.code === value);
-
-    if (country === null) {
-      this.selectedCountry.code = 'Unable to find country';
-    } else {
-      this.selectedCountryName = country.name;
-    }
-  }
-
-  getCountries() {
-    this.getDataService.getAllCountries().subscribe(data => {
-      return (this.countries = data);
-    });
-  }
-
-  openLookupDialog(event: any): void {
-    if (event.target.value !== '?') {
-      return;
-    }
-
-    event.target.value = '';
-
-    const dialogRef = this.dialog.open (LookupdialogComponent, {width: '450px'});
-    dialogRef.componentInstance.rowSelected.subscribe(result => {
-      this.doSetResult(result);
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      dialogRef.componentInstance.rowSelected.unsubscribe();
-    });
-  }
-  doSetResult(result: any) {
+ private doSetResult(result: any) {
     this.countryModalDialogLookupInput  = result;
   }
 
-  toggleLookup(event: any): void {
-    if (event.target.value !== '?') {
-      return;
-    }
-
-    event.target.value = '';
-    this.toggleLookupElement = true;
-  }
-
-  clearAll = () => {
-    this.countryLookupExpandingDialogFormGroup.reset();
-  }
-
-  closeLookup() {
-    this.toggleLookupElement = false;
-  }
-
-  cellClicked(element) {
-    this.toggleLookupElement = false;
-    this.countryLookupInput = element.name;
+  alert(value: string) {
+    window.alert(value);
   }
 
 }

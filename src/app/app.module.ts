@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LookupdialogComponent } from './lookupdialog/lookupdialog.component';
 
 import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
+import { MatGridListResponsiveModule } from '../lib/mat-grid-list-responsive/mat-grid-list-responsive.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ScrollingModule
+    ScrollingModule,
+    MatGridListResponsiveModule
   ],
   providers: [ScrollDispatcher],
   bootstrap: [AppComponent]
