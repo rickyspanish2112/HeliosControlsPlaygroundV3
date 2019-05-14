@@ -238,9 +238,11 @@
   {"name": "Viet Nam", "code": "VN"},
   {"name": "Virgin Islands, British", "code": "VG"},
   {"name": "Virgin Islands, U.S.", "code": "VI"},
+  {"name": "Wakonda", "code": "WK"},
   {"name": "Wallis and Futuna", "code": "WF"},
   {"name": "Western Sahara", "code": "EH"},
   {"name": "Yemen", "code": "YE"},
   {"name": "Zambia", "code": "ZM"},
   {"name": "Zimbabwe", "code": "ZW"}
+
   ]
