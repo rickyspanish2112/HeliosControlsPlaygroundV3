@@ -183,6 +183,7 @@ export class ControlsComponent implements OnInit {
       return;
     }
 
+    event.target.value = '';
     this.toggleLookupElement = true;
   }
 
