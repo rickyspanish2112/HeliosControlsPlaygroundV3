@@ -163,7 +163,9 @@ export class ControlsComponent implements OnInit {
       return;
     }
 
-    const dialogRef = this.dialog.open(LookupdialogComponent, {width: '450px'});
+    event.target.value = '';
+
+    const dialogRef = this.dialog.open (LookupdialogComponent, {width: '450px'});
     dialogRef.componentInstance.rowSelected.subscribe(result => {
       this.doSetResult(result);
     });
