@@ -1,5 +1,8 @@
-@import '~@angular/material/theming';
-@import '../../theme.scss';
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+}
 
 .declarationType {
     min-width: 50px;
@@ -9,37 +12,37 @@
 
 .mat-form-field {
     width: 50%;
-    font-size: 12px;
 }
 
 .unConstrainedDropdown {
     min-width: 100px;
     max-width: 100px;
     width: 100%;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 0.95em;
 }
 
-.countryGroup {
+.dropdownpPopUp {
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 12px;
+}
+
+.lookupUpFormControl {
+  width: 150px;
+}
+
+.countryGroupFormGroup {
     width: 150px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
 }
 
 .countryCode {
     min-width: 50px;
     max-width: 50px;
     width: 50%;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 0.95em;
 }
 
 .readOnlyControl {
     border: 1px gray solid;
     background: lightgray;
     border-radius: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
     padding: 5px;
     width: 100px;
 }
@@ -47,8 +50,6 @@
 .lookup-input {
     border: 1px gray solid;
     border-radius: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
     padding: 5px;
 }
 
@@ -57,8 +58,6 @@
     width: 450px;
     border: 1px gray solid;
     border-radius: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
     padding: 5px;
 }
 
@@ -75,15 +74,8 @@
     height: 200px;
 }
 
-.tableCell {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
-}
-
 .tableHeader {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
-    font-weight: bold;
+   font-weight: bold;
 }
 
 .element-row {
@@ -120,12 +112,4 @@ mat-grid-tile {
   padding: 4px;
   width: calc(100% - 10px);
 
-  &, &:hover {
-    color: mat-color($app-primary);
-  }
-
-  mat-icon:first-child {
-    text-align: center;
-    width: 40px;
-  }
 }
