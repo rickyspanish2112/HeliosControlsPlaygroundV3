@@ -11,12 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LookupdialogComponent } from './lookupdialog/lookupdialog.component';
 
 import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
+import { GridComponent } from './controls/grid/grid.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlsComponent,
-    LookupdialogComponent
+    LookupdialogComponent,
+    GridComponent
   ],
   entryComponents: [
     LookupdialogComponent
