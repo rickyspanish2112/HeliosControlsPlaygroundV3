@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTable, MatTableDataSource, Sort } from '@angular/material';
+import { Type } from 'src/app/model/type';
 
 export interface Grid {
-  player: string;
-  game: string;
-  score: number;
-  newScore: number;
+
+  code: string;
+  // newScore: number;
 }
 
 const gridColumnNames: Grid[] = [
@@ -17,8 +17,6 @@ const gridColumnNames: Grid[] = [
   { player: 'Noob', game: 'Counter Strike', score: 3, newScore: undefined },
   { player: 'Lagger', game: 'Counter Strike', score: 4, newScore: undefined } */
 ];
-
-const ELEMENT_DATA: Element[] = [];
 
 
 @Component({
@@ -34,10 +32,15 @@ export class GridComponent implements OnInit {
   displayedColumns = ['type'];
   // dataSource = new MatTableDataSource();
 
-  columns = ['score', 'add'];
+  columns = ['code', 'add'];
   dataSource: MatTableDataSource<Grid>;
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  declarationTypes: Type[] = [
+    {code: 'Z', description: 'Description 1' },
+    {code: 'Y', description: 'Description 2' }
+  ];
 
 
   applyFilter(filterValue: string) {
@@ -45,7 +48,7 @@ export class GridComponent implements OnInit {
   }
 
   applyToAll(newScore: number) {
-    this.dataSource.filteredData.forEach(s => s.newScore = newScore);
+   // this.dataSource.filteredData.forEach(s => s.newScore = newScore);
   }
 
   ngOnInit() {
@@ -53,8 +56,8 @@ export class GridComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  removeAll() {
-    this.dataSource.data = [];
+  addRow() {
+    gridColumnNames.push({code: 'Z'});
   }
 
   removeAt(index: number) {
@@ -69,7 +72,7 @@ export class GridComponent implements OnInit {
     this.table.renderRows();
   }
 
-  sortData(sort: Sort) {
+ /*  sortData(sort: Sort) {
     if (sort.active && sort.direction !== '') {
       this.dataSource.data = this.dataSource.data.sort((a, b) => {
         const isAsc = sort.direction === 'asc';
@@ -81,7 +84,7 @@ export class GridComponent implements OnInit {
         }
       });
     }
-  }
+  } */
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
