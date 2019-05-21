@@ -70,6 +70,8 @@ export class GridComponent implements OnInit {
     data.splice(this.paginator.pageIndex * this.paginator.pageSize + index, 1);
 
     this.dataSource.data = data;
+
+    this.expanded = false;
   }
 
   onDown() {
