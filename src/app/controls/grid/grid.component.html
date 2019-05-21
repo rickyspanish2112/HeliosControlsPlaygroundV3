@@ -23,13 +23,13 @@
         </mat-form-field>
       </td>
     </ng-container>
-    <ng-container matColumnDef="additionalCode">
+    <ng-container matColumnDef="additionalCode" >
       <th mat-header-cell *matHeaderCellDef>Additional Code</th>
       <td mat-cell *matCellDef="let element" >
         <mat-form-field class="type">
-          <input matInput [(ngModel)]="element.type" (keyup)="toggleLookup($event)" >
+          <input matInput (keyup)="toggleLookup($event)" >
         </mat-form-field>
-        <div *ngIf="expanded">Yah it expanded</div>
+        <div *ngIf="expanded" class="child">Yah it expanded</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="ref">
