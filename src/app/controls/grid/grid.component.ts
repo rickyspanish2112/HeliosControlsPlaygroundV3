@@ -53,6 +53,7 @@ export class GridComponent implements OnInit {
 
   addRow() {
     this.doAddRow();
+    this.expanded = false;
   }
 
   toggleLookup(event: any): void {
