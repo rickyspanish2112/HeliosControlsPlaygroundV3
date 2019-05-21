@@ -4,15 +4,33 @@ input {
 }
 
 table {
-  width: 100%;
+  width: 50%;
   margin-bottom: 1em;
 }
 
 td.footer {
   font-style: italic;
-  text-align: center;
+  text-align: right;
 }
 
 .table-container {
-  width: 100%;
+  width: 80%;
+}
+
+mat-paginator {
+  border: 1px gray solid;
+  border-radius: 5px;
+  float: left;
+}
+
+.code {
+  min-width: 40px;
+  max-width: 40px;
+  width: 40px;
+}
+
+.type {
+  min-width: 60px;
+  max-width: 60px;
+  width: 60px;
 }

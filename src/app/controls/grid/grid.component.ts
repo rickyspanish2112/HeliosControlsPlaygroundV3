@@ -3,21 +3,12 @@ import { MatPaginator, MatSort, MatTable, MatTableDataSource, Sort } from '@angu
 import { Type } from 'src/app/model/type';
 
 export interface Grid {
-
   code: string;
-  // newScore: number;
+  type: string;
+  reference: string;
 }
 
-const gridColumnNames: Grid[] = [
- /*  { player: 'Top Gun', game: 'River Raid', score: 15, newScore: undefined },
-  { player: 'ThePro', game: 'River Raid', score: 11, newScore: undefined },
-  { player: 'Ninja', game: 'Counter Strike', score: 10, newScore: undefined },
-  { player: 'Killer', game: 'Counter Strike', score: 9, newScore: undefined },
-  { player: 'Psycho', game: 'Counter Strike', score: 6, newScore: undefined },
-  { player: 'Noob', game: 'Counter Strike', score: 3, newScore: undefined },
-  { player: 'Lagger', game: 'Counter Strike', score: 4, newScore: undefined } */
-];
-
+const ELEMENT_DATA: Grid[] = [];
 
 @Component({
   selector: 'app-grid',
@@ -28,18 +19,20 @@ const gridColumnNames: Grid[] = [
 
 export class GridComponent implements OnInit {
 
-  value1 = '';
-  displayedColumns = ['type'];
-  // dataSource = new MatTableDataSource();
-
-  columns = ['code', 'add'];
+  expanded = false;
+  columns = ['category', 'type', 'additionalCode', 'ref', 'add'];
   dataSource: MatTableDataSource<Grid>;
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  declarationTypes: Type[] = [
+  categories: Type[] = [
     {code: 'Z', description: 'Description 1' },
     {code: 'Y', description: 'Description 2' }
+  ];
+
+  types: Type[] = [
+    {code: '741', description: 'Description 1' },
+    {code: '380', description: 'Description 2' }
   ];
 
 
@@ -52,12 +45,22 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(gridColumnNames.slice());
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA.slice());
     this.dataSource.paginator = this.paginator;
   }
 
   addRow() {
-    gridColumnNames.push({code: 'Z'});
+    ELEMENT_DATA.push({code: '', type: '', reference: ''});
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  }
+
+  toggleLookup(event: any): void {
+    if (event.target.value !== '?') {
+      return;
+    }
+
+    event.target.value = '';
+    this.expanded = true;
   }
 
   removeAt(index: number) {
@@ -67,10 +70,10 @@ export class GridComponent implements OnInit {
     this.dataSource.data = data;
   }
 
-  reset() {
+/*   reset() {
     this.dataSource.data = gridColumnNames.slice();
     this.table.renderRows();
-  }
+  } */
 
  /*  sortData(sort: Sort) {
     if (sort.active && sort.direction !== '') {
@@ -89,7 +92,6 @@ export class GridComponent implements OnInit {
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
-
 
 }
 

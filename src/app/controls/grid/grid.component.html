@@ -4,13 +4,40 @@
 </mat-form-field>
 <div class="table-container">
   <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef>Code</th>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
       <td mat-cell *matCellDef="let code" >
-        <mat-form-field>
-          <mat-select >
-            <mat-option *ngFor=" let type of declarationTypes" [value]="type.code">{{type.code}}</mat-option>
+        <mat-form-field class="code">
+          <mat-select>
+            <mat-option *ngFor=" let category of categories" [value]="category.code">{{category.code}}</mat-option>
           </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let code" >
+        <mat-form-field class="type">
+          <mat-select >
+            <mat-option *ngFor=" let type of types" [value]="type.code">{{type.code}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="additionalCode">
+      <th mat-header-cell *matHeaderCellDef>Additional Code</th>
+      <td mat-cell *matCellDef="let element" >
+        <mat-form-field class="type">
+          <input matInput [(ngModel)]="element.type" (keyup)="toggleLookup($event)" >
+        </mat-form-field>
+        <div *ngIf="expanded">Yah it expanded</div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="ref">
+      <th mat-header-cell *matHeaderCellDef>Reference</th>
+      <td mat-cell *matCellDef="let element" >
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.type">
         </mat-form-field>
       </td>
     </ng-container>
@@ -28,7 +55,7 @@
     </ng-container>
     <ng-container matColumnDef="footerMessage">
       <td mat-footer-cell *matFooterCellDef colspan="4" class="footer">
-        Showing {{dataSource.filteredData.length}} of {{dataSource.data && dataSource.data.length ? dataSource.data.length : 'No'}} score(s) registered
+        Number of rows in grid: {{dataSource.filteredData.length}}
       </td>
     </ng-container>
 
@@ -39,4 +66,3 @@
 
   <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
 </div>
-<button mat-button (click)="reset()">Reset</button>
