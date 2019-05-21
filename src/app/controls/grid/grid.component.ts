@@ -45,13 +45,14 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA.slice());
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
   }
 
   addRow() {
     ELEMENT_DATA.push({code: '', type: '', reference: ''});
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource.paginator = this.paginator;
   }
 
   toggleLookup(event: any): void {
