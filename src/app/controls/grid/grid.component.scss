@@ -6,6 +6,7 @@ input {
 table {
   width: 50%;
   margin-bottom: 1em;
+  border: 1px gray solid;
 }
 
 td.footer {
@@ -14,7 +15,7 @@ td.footer {
 }
 
 .table-container {
-  width: 80%;
+  width: 70%;
 }
 
 mat-paginator {
@@ -42,13 +43,24 @@ mat-paginator {
 
 .child {
   position: absolute;
-  top:742px;
-  left:225px;
+  top:737px;
+  left:195px;
   border: 2px gray solid;
   border-radius: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 5px;
+  background-color: azure;
+}
 
+
+.paginator {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.dropdownpPopUp {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
 }

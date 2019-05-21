@@ -1,14 +1,12 @@
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Grid">
-</mat-form-field>
+
 <div class="table-container">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <th mat-header-cell *matHeaderCellDef >Category</th>
       <td mat-cell *matCellDef="let code" >
         <mat-form-field class="code">
           <mat-select>
-            <mat-option *ngFor=" let category of categories" [value]="category.code">{{category.code}}</mat-option>
+            <mat-option *ngFor=" let category of categories" [value]="category.code" class="dropdownpPopUp"  (keydown.ArrowDown)="onDown()">{{category.code}}</mat-option>
           </mat-select>
         </mat-form-field>
       </td>
@@ -18,7 +16,7 @@
       <td mat-cell *matCellDef="let code" >
         <mat-form-field class="type">
           <mat-select >
-            <mat-option *ngFor=" let type of types" [value]="type.code">{{type.code}}</mat-option>
+            <mat-option *ngFor=" let type of types" [value]="type.code" class="dropdownpPopUp"  (keydown.ArrowDown)="onDown()">{{type.code}}</mat-option>
           </mat-select>
         </mat-form-field>
       </td>
@@ -27,16 +25,18 @@
       <th mat-header-cell *matHeaderCellDef>Additional Code</th>
       <td mat-cell *matCellDef="let element" >
         <mat-form-field class="type">
-          <input matInput (keyup)="toggleLookup($event)" >
+          <input matInput (keyup)="toggleLookup($event)"  (keydown.ArrowDown)="onDown()">
         </mat-form-field>
-        <div *ngIf="expanded" class="child">Yah it expanded</div>
+        <div *ngIf="expanded" class="child">Yah it expanded
+          <button (click)="expanded = false">Close</button>
+        </div>
       </td>
     </ng-container>
     <ng-container matColumnDef="ref">
       <th mat-header-cell *matHeaderCellDef>Reference</th>
       <td mat-cell *matCellDef="let element" >
         <mat-form-field>
-          <input matInput [(ngModel)]="element.type">
+          <input matInput [(ngModel)]="element.type"  (keydown.ArrowDown)="onDown()" autocomplete="off">
         </mat-form-field>
       </td>
     </ng-container>
@@ -47,21 +47,14 @@
         </button>
       </th>
       <td mat-cell *matCellDef="let code; let i = index;">
-        <button mat-icon-button (click)="removeAt(i)" matTooltip="Remove this code">
+        <button mat-icon-button (click)="removeAt(i)" matTooltip="Remove Row">
           <mat-icon>clear</mat-icon>
         </button>
       </td>
     </ng-container>
-    <ng-container matColumnDef="footerMessage">
-      <td mat-footer-cell *matFooterCellDef colspan="4" class="footer">
-        Number of rows in grid: {{dataSource.filteredData.length}}
-      </td>
-    </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let rows; columns: columns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="['footerMessage']" ></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+ <div *ngIf="dataSource.filteredData.length > 0" > <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons class="paginator"></mat-paginator></div>
 </div>
