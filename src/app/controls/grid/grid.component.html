@@ -21,14 +21,14 @@
         </mat-form-field>
       </td>
     </ng-container>
-    <ng-container matColumnDef="additionalCode" >
+    <ng-container matColumnDef="additionalCode" class="parent" >
       <th mat-header-cell *matHeaderCellDef>Additional Code</th>
-      <td mat-cell *matCellDef="let element" >
+      <td mat-cell *matCellDef="let element" class="parent" >
         <mat-form-field class="type">
-          <input matInput (keyup)="toggleLookup($event)"  (keydown.ArrowDown)="onDown()">
+          <input matInput (keyup)="toggleLookup($event, element)" autocomplete="off" (keydown.ArrowDown)="onDown()">
         </mat-form-field>
-        <div *ngIf="expanded" class="child">Yah it expanded
-          <button (click)="expanded = false">Close</button>
+        <div *ngIf="element.expanded" class="child">Yah it expanded
+          <button (click)="element.expanded = false">Close</button>
         </div>
       </td>
     </ng-container>

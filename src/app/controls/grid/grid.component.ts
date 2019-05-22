@@ -56,13 +56,12 @@ export class GridComponent implements OnInit {
     this.expanded = false;
   }
 
-  toggleLookup(event: any): void {
+  toggleLookup(event: any, element: any): void {
     if (event.target.value !== '?') {
       return;
     }
-
     event.target.value = '';
-    this.expanded = true;
+    element.expanded = true;
   }
 
   removeAt(index: number) {
@@ -77,6 +76,7 @@ export class GridComponent implements OnInit {
   onDown() {
     this.addRow();
   }
+
 
   private doAddRow() {
     ELEMENT_DATA.push({ code: '', type: '', reference: '' });
