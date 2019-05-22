@@ -1,31 +1,31 @@
 
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort matSortDirection="asc">
     <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef >Category</th>
-      <td mat-cell *matCellDef="let code" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <td mat-cell *matCellDef="let category" >
         <mat-form-field class="code">
           <mat-select>
-            <mat-option *ngFor=" let category of categories" [value]="category.code" class="dropdownpPopUp"  (keydown.ArrowDown)="onDown()">{{category.code}}</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category.code" class="dropdownpPopUp" (keydown.ArrowDown)="onDown()">{{category.code}}</mat-option>
           </mat-select>
         </mat-form-field>
       </td>
     </ng-container>
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let code" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let type" >
         <mat-form-field class="type">
-          <mat-select >
+          <mat-select>
             <mat-option *ngFor=" let type of types" [value]="type.code" class="dropdownpPopUp"  (keydown.ArrowDown)="onDown()">{{type.code}}</mat-option>
           </mat-select>
         </mat-form-field>
       </td>
     </ng-container>
     <ng-container matColumnDef="additionalCode" class="parent" >
-      <th mat-header-cell *matHeaderCellDef>Additional Code</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Additional Code</th>
       <td mat-cell *matCellDef="let element" class="parent" >
-        <mat-form-field class="type">
-          <input matInput (keyup)="toggleLookup($event, element)" autocomplete="off" (keydown.ArrowDown)="onDown()">
+        <mat-form-field class="type" let="i = index">
+          <input matInput (keyup)="toggleLookup($event, element)"[(ngModel)]="element.additionCode" autocomplete="off" (keydown.ArrowDown)="onDown()">
         </mat-form-field>
         <div *ngIf="element.expanded" class="child">Yah it expanded
           <button (click)="element.expanded = false">Close</button>
@@ -36,7 +36,7 @@
       <th mat-header-cell *matHeaderCellDef>Reference</th>
       <td mat-cell *matCellDef="let element" >
         <mat-form-field>
-          <input matInput [(ngModel)]="element.type"  (keydown.ArrowDown)="onDown()" autocomplete="off">
+          <input matInput [(ngModel)]="element.reference"  (keydown.ArrowDown)="onDown()" autocomplete="off">
         </mat-form-field>
       </td>
     </ng-container>

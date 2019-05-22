@@ -4,13 +4,15 @@ import {
   MatSort,
   MatTable,
   MatTableDataSource,
-  Sort
+  Sort,
+  PageEvent
 } from '@angular/material';
 import { Type } from 'src/app/model/type';
 
 export interface Grid {
-  code: string;
+  category: string;
   type: string;
+  additionCode: string;
   reference: string;
 }
 
@@ -25,8 +27,10 @@ export class GridComponent implements OnInit {
   expanded = false;
   columns = ['category', 'type', 'additionalCode', 'ref', 'add'];
   dataSource: MatTableDataSource<Grid>;
+
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   categories: Type[] = [
     { code: 'Z', description: 'Description 1' },
@@ -38,17 +42,16 @@ export class GridComponent implements OnInit {
     { code: '380', description: 'Description 2' }
   ];
 
+  displayCategory: Type;
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  applyToAll(newScore: number) {
-    // this.dataSource.filteredData.forEach(s => s.newScore = newScore);
   }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   addRow() {
@@ -77,34 +80,9 @@ export class GridComponent implements OnInit {
     this.addRow();
   }
 
-
   private doAddRow() {
-    ELEMENT_DATA.push({ code: '', type: '', reference: '' });
-    this.dataSource.paginator = this.paginator;
-
+    ELEMENT_DATA.push({ category: '', type: '', additionCode: '', reference: '' });
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-  }
-
-  /*   reset() {
-    this.dataSource.data = gridColumnNames.slice();
-    this.table.renderRows();
-  } */
-
-  /*  sortData(sort: Sort) {
-    if (sort.active && sort.direction !== '') {
-      this.dataSource.data = this.dataSource.data.sort((a, b) => {
-        const isAsc = sort.direction === 'asc';
-        switch (sort.active) {
-          case 'player': return this.compare(a.player, b.player, isAsc);
-          case 'game': return this.compare(a.game, b.game, isAsc);
-          case 'score': return this.compare(a.score, b.score, isAsc);
-          default: return 0;
-        }
-      });
-    }
-  } */
-
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    this.dataSource.paginator = this.paginator;
   }
 }
