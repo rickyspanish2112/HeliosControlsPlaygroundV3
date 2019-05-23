@@ -34,13 +34,6 @@ export class LooukupPopupComponent implements OnInit {
   countryLookupInput: string;
   countryModalDialogLookupInput: any;
 
-  typeCtrl = new FormControl();
-  stateForm: FormGroup = this.fb.group({
-    stateGroup: ''
-  });
-
-  countryLookupModalDialogForm = new FormControl();
-
   countryLookupExpandingDialogForm = new FormControl();
   countryLookupExpandingDialogFormGroup: FormGroup = this.fb.group({
     countryCodeFC: '',
@@ -48,7 +41,6 @@ export class LooukupPopupComponent implements OnInit {
   });
 
   countryCtrl = new FormControl();
-  cache: Country[];
   rows: Country[];
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
@@ -75,26 +67,8 @@ export class LooukupPopupComponent implements OnInit {
         this.applyAllFilters();
       });
 
-    this.declarationTypes$ = this.typeCtrl.valueChanges.pipe(
-      map(type =>
-        this.filteredTypes(type)
-      )
-    );
-
-    this.stateGroupsOptions$ = this.stateForm
-      .get('stateGroup')
-      .valueChanges.pipe(
-        startWith(''),
-        map(value => this.filterGroup(value))
-      );
-
-  }
-
-  toggleLookup(event: any): void {
-    if (event.target.value !== '?') {
-      return;
     }
-  }
+
 
   cellClicked(element) {
     this.toggleLookupElement = false;
@@ -132,24 +106,4 @@ export class LooukupPopupComponent implements OnInit {
 
     this.dataSource = rows;
   }
-
-  private filterGroup(value: any): any {
-    if (value) {
-      return this.stateGroups
-        .map(group => ({
-          letter: group.letter,
-          names: FILTER(group.names, value)
-        }))
-        .filter(group => group.names.length > 0);
-    }
-  }
-
-  private filteredTypes(value: string): Declarationtype[] {
-    const filterValue = value.toLowerCase();
-
-    return this.declarationTypes.filter(
-      state => state.value.toLowerCase().indexOf(filterValue) === 0
-    );
-  }
-
 }
