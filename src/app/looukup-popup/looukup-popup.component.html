@@ -3,9 +3,9 @@
 
         <div class="filterBar"
           [formGroup]="countryLookupExpandingDialogFormGroup">
-          <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+          <input formControlName="countryCodeFC" type="text" placeholder="Country Code" style="width: 85px;" />
           &nbsp;
-          <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+          <input formControlName="countryNameFC" type="text" placeholder="Country Name" />
           &nbsp;
           <button (click)="clearAll()">X</button>
         </div>
@@ -14,18 +14,18 @@
 
           <!-- Code Column -->
           <ng-container matColumnDef="code">
-            <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="tableCell" style="flex-grow: 1"> {{element.code}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef class="tableHeader"  style="flex-grow: 1; padding-left: 5px;"> Code </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="my-mat-cell" style="flex-grow: 1; padding-left: 5px;"> {{element.code}} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef class="tableHeader" style="flex-grow: 8; padding-left: 5px;"> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="my-mat-cell" style="flex-grow: 8; padding-left: 5px;"> {{element.name}} </mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
+          <mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="my-mat-row"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="my-mat-cell" (click)="cellClicked(row)">
           </mat-row>
         </mat-table>
         <mat-dialog-actions>
