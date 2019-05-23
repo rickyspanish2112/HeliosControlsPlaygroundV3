@@ -1,5 +1,5 @@
 <form [formGroup]="countryLookupExpandingDialogForm">
-      <div class="example-container mat-elevation-z8">
+      <div class="lookup-container mat-elevation-z8">
 
         <div class="filterBar"
           [formGroup]="countryLookupExpandingDialogFormGroup">
@@ -20,8 +20,8 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef class="tableHeader" style="flex-grow: 8; padding-left: 5px;"> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="my-mat-cell" style="flex-grow: 8; padding-left: 5px;"> {{element.name}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef class="tableHeader" style="flex-grow: 8; padding-left: 55px;"> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="my-mat-cell" style="flex-grow: 8; padding-left: 55px;"> {{element.name}} </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="my-mat-row"></mat-header-row>
