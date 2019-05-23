@@ -1,0 +1,35 @@
+<form [formGroup]="countryLookupExpandingDialogForm">
+      <div class="example-container mat-elevation-z8">
+
+        <div class="filterBar"
+          [formGroup]="countryLookupExpandingDialogFormGroup">
+          <input formControlName="countryCodeFC" type="text" placeholder="Country Code Filter" />
+          &nbsp;
+          <input formControlName="countryNameFC" type="text" placeholder="Country Name Filter" />
+          &nbsp;
+          <button (click)="clearAll()">X</button>
+        </div>
+
+        <mat-table #table [dataSource]="dataSource">
+
+          <!-- Code Column -->
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef class="tableHeader"> Code </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="tableCell" style="flex-grow: 1"> {{element.code}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef class="tableHeader"> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="tableCell"> {{element.name}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row" (click)="cellClicked(row)">
+          </mat-row>
+        </mat-table>
+        <mat-dialog-actions>
+          <button mat-button color="primary" (click)="closeLookup()" style="float: right; margin-bottom: 10px;">Cancel</button>
+        </mat-dialog-actions>
+      </div>
+  </form>

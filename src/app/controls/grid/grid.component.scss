@@ -1,66 +1,61 @@
-
 input {
-  text-align: left;
+    text-align: left;
 }
 
 table {
-  width: 50%;
-  margin-bottom: 1em;
-  border: 1px gray solid;
+    width: 50%;
+    margin-bottom: 1em;
+    border: 1px gray solid;
 }
 
 td.footer {
-  font-style: italic;
-  text-align: right;
+    font-style: italic;
+    text-align: right;
 }
 
 .table-container {
-  width: 70%;
+    width: 70%;
 }
 
 mat-paginator {
-  border: 1px gray solid;
-  border-radius: 5px;
-  float: left;
+    border: 1px gray solid;
+    border-radius: 5px;
+    float: left;
 }
 
 .code {
-  min-width: 40px;
-  max-width: 40px;
-  width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    width: 40px;
 }
 
 .type {
-  position:relative;
-  min-width: 60px;
-  max-width: 60px;
-  width: 60px;
+    position: relative;
+    min-width: 60px;
+    max-width: 60px;
+    width: 60px;
 }
 
+.grandParent {
+    position: relative;
+}
 
 .parent {
-  position: relative;
+    position: relative;
 }
 
 .child {
-  position: absolute;
-  top: 42px;
-  border: 2px gray solid;
-  border-radius: 5px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-  background-color: azure;
+    position: absolute;
+    top: -10px;
+    width: 450px;
 }
 
-
 .paginator {
-  font-size: 12px;
-  font-style: italic;
+    font-size: 12px;
+    font-style: italic;
 }
 
 .dropdownpPopUp {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
 }
