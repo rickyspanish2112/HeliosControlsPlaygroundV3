@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Declarationtype } from '../model/declarationtypes';
 import { State } from '../model/state';
@@ -45,6 +45,8 @@ export class LooukupPopupComponent implements OnInit {
   displayedColumns = ['code', 'name'];
   dataSource = new MatTableDataSource(this.rows);
 
+  @Output() closeLookup: EventEmitter<boolean> = new EventEmitter();
+
   constructor(
     private getDataService: GetdataService,
     private fb: FormBuilder,
@@ -79,9 +81,9 @@ export class LooukupPopupComponent implements OnInit {
     this.countryLookupExpandingDialogFormGroup.reset();
   }
 
-  closeLookup() {
-    this.toggleLookupElement = false;
-  }
+/*   closeLookup() {
+    this.notifyParent.emit(false);
+  } */
 
   private getCountries() {
     this.getDataService.getAllCountries().subscribe(data => {

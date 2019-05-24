@@ -52,6 +52,7 @@ export class GridComponent implements OnInit {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
   }
 
   addRow() {
@@ -78,6 +79,10 @@ export class GridComponent implements OnInit {
 
   onDown() {
     this.addRow();
+  }
+
+  upCase(element: any) {
+    element.expanded = false;
   }
 
   private doAddRow() {

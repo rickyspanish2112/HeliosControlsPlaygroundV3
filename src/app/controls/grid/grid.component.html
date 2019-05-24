@@ -28,7 +28,7 @@
           <input matInput (keyup)="toggleLookup($event, element)"[(ngModel)]="element.additionCode" autocomplete="off" (keydown.ArrowDown)="onDown()">
         </mat-form-field>
         <div *ngIf="element.expanded" class="parent">
-          <app-looukup-popup class="child"></app-looukup-popup>
+          <app-looukup-popup class="child" (closeLookup)="upCase(element)" ></app-looukup-popup>
         </div>
       </td>
     </ng-container>
