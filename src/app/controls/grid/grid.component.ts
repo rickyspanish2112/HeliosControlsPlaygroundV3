@@ -27,6 +27,7 @@ export class GridComponent implements OnInit {
   expanded = false;
   columns = ['category', 'type', 'additionalCode', 'ref', 'add'];
   dataSource: MatTableDataSource<Grid>;
+  countryLookupInput: string;
 
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -79,8 +80,15 @@ export class GridComponent implements OnInit {
     this.addRow();
   }
 
-  upCase(element: any) {
+  closeLookupHandler(element: any) {
+    console.log('Close lookup event received');
     element.expanded = false;
+  }
+
+  updateAdditionalCodeHandler(event: any, element: any) {
+    console.log('Update Addition Code event received: ' + event.code);
+    element.expanded = false;
+    this.countryLookupInput = event.code;
   }
 
   private doAddRow() {

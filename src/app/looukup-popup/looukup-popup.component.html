@@ -25,7 +25,7 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="my-mat-row"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" class="my-mat-cell" (click)="cellClicked(row)">
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="my-mat-cell" (click)="setAdditionalCodeValue.emit(row)">
           </mat-row>
         </mat-table>
         <mat-dialog-actions>

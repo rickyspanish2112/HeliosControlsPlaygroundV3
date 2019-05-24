@@ -46,6 +46,7 @@ export class LooukupPopupComponent implements OnInit {
   dataSource = new MatTableDataSource(this.rows);
 
   @Output() closeLookup: EventEmitter<boolean> = new EventEmitter();
+  @Output() setAdditionalCodeValue: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private getDataService: GetdataService,
@@ -54,7 +55,6 @@ export class LooukupPopupComponent implements OnInit {
 
   ngOnInit() {
     this.getCountries();
-
 
     this.countryLookupExpandingDialogFormGroup.get('countryCodeFC').valueChanges
       .subscribe(val => {
@@ -71,7 +71,6 @@ export class LooukupPopupComponent implements OnInit {
 
     }
 
-
   cellClicked(element) {
     this.toggleLookupElement = false;
     this.countryLookupInput = element.name;
@@ -80,10 +79,6 @@ export class LooukupPopupComponent implements OnInit {
   clearAll = () => {
     this.countryLookupExpandingDialogFormGroup.reset();
   }
-
-/*   closeLookup() {
-    this.notifyParent.emit(false);
-  } */
 
   private getCountries() {
     this.getDataService.getAllCountries().subscribe(data => {
