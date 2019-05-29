@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {
   MatPaginator,
   MatSort,
@@ -13,7 +13,7 @@ export interface Grid {
   index: number;
   category: string;
   type: string;
-  additionCode: string;
+  additionalCode: string;
   reference: string;
 }
 
@@ -47,6 +47,9 @@ export class GridComponent implements OnInit {
   ];
 
   displayCategory: Type;
+
+ constructor() {}
+
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -94,34 +97,29 @@ export class GridComponent implements OnInit {
   updateAdditionalCodeHandler(event: any, element: any) {
     console.log('Update Addition Code event received: ' + event.code);
     element.expanded = false;
-
-    const dsi = this.dataSourceIndex - 1; // Need to remove 1 here to keep data source and row index aligned
-    const tri = this.tableRowIndex;
-
-    this.getSelectedDataFromDataSource(dsi, tri);
-
-    this.additionCodeLookupInput = event.code;
+    this.updateSelectedDataRow(this.tableRowIndex, event.code);
   }
- private getSelectedDataFromDataSource(dsi: number, tri: number) {
-  const matchedData = ELEMENT_DATA.filter(x => x.index === dsi);
-  console.log('Found matching array data at index: ' + matchedData[0].index);
 
-  console.log(`About to update datasource array at index ${ matchedData[0].index}. Value ${ this.additionCodeLookupInput }`);
+  private updateSelectedDataRow(tableRowIndex: number, addtionalCode: any) {
+    const matchedData = ELEMENT_DATA.find(x => x.index === tableRowIndex);
+    console.log('Found matching array data at index: ' + tableRowIndex);
 
+    console.log('About to update datasource with Additonal code value: ' + addtionalCode);
+    matchedData.additionalCode = addtionalCode;
   }
 
   private doAddRow() {
 
     if (this.dataSourceIndex > 0) {
-      this.updateDataSource();
+      this.addNewDataSourceArrayObject();
     } else {
-      this.updateDataSource();
+      this.addNewDataSourceArrayObject();
     }
     this.dataSourceIndex++;
   }
 
-  private updateDataSource() {
-    ELEMENT_DATA.push({ index: this.dataSourceIndex, category: '', type: '', additionCode: '', reference: '' });
+  private addNewDataSourceArrayObject() {
+    ELEMENT_DATA.push({ index: this.dataSourceIndex, category: '', type: '', additionalCode: '', reference: '' });
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
   }
