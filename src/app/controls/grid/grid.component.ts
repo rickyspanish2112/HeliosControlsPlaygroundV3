@@ -110,11 +110,14 @@ export class GridComponent implements OnInit {
 
   private doAddRow() {
 
-    if (this.dataSourceIndex > 0) {
+   /*  if (this.dataSourceIndex > 0) {
       this.addNewDataSourceArrayObject();
     } else {
       this.addNewDataSourceArrayObject();
-    }
+    } */
+
+    this.addNewDataSourceArrayObject();
+
     this.dataSourceIndex++;
   }
 
