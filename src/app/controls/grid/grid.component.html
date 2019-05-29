@@ -23,9 +23,9 @@
     </ng-container>
     <ng-container matColumnDef="additionalCode">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Additional Code</th>
-      <td mat-cell *matCellDef="let element" class="grandParent" >
-        <mat-form-field class="type" let="i = index">
-          <input matInput (keyup)="toggleLookup($event, element)" [(ngModel)]="countryLookupInput" autocomplete="off" (keydown.ArrowDown)="onDown()">
+      <td mat-cell *matCellDef="let element; let i = index;" class="grandParent" >
+        <mat-form-field class="type">
+          <input matInput (keyup)="toggleLookup($event, element, i)" autocomplete="off" (keydown.ArrowDown)="onDown()">
         </mat-form-field>
         <div *ngIf="element.expanded" class="parent">
           <app-looukup-popup class="child" (closeLookup)="closeLookupHandler(element)" (setAdditionalCodeValue)="updateAdditionalCodeHandler($event, element)" ></app-looukup-popup>
@@ -36,7 +36,7 @@
       <th mat-header-cell *matHeaderCellDef>Reference</th>
       <td mat-cell *matCellDef="let element" >
         <mat-form-field>
-          <input matInput [(ngModel)]="element.reference"  (keydown.ArrowDown)="onDown()" autocomplete="off">
+          <input matInput [(ngModel)]="element.reference" (keydown.ArrowDown)="onDown()" autocomplete="off">
         </mat-form-field>
       </td>
     </ng-container>
