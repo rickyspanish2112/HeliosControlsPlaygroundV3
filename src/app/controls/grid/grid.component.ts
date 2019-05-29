@@ -80,7 +80,7 @@ export class GridComponent implements OnInit {
 
   removeAt(index: number) {
     const data = this.dataSource.data;
-    data.splice(index, 1);
+    data.splice(this.paginator.pageIndex * this.paginator.pageSize + index, 1);
     this.dataSource.data = data;
     this.expanded = false;
   }
@@ -109,12 +109,6 @@ export class GridComponent implements OnInit {
   }
 
   private doAddRow() {
-
-   /*  if (this.dataSourceIndex > 0) {
-      this.addNewDataSourceArrayObject();
-    } else {
-      this.addNewDataSourceArrayObject();
-    } */
 
     this.addNewDataSourceArrayObject();
 
