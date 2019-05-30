@@ -1,66 +1,96 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError, tap, map, delay } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
+import { throwError, Observable, BehaviorSubject } from 'rxjs';
 import { Country } from '../model/country';
 import { Declarationtype } from '../model/declarationtypes';
 import { State } from '../model/state';
+import { Port } from '../model/ports';
 
-// Configure the amount of latency and jitter to simulate
-const apiLatency = 100;
-
-// Set to 3000 to see that out-of-order replies don't cause any problem:
-const apiJitter = 100;
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetdataService {
 
+  dataChange: BehaviorSubject<Port[]> = new BehaviorSubject<Port[]>([]);
+  // Temporarily stores data from dialogs
+  dialogData: any;
+
   constructor(private http: HttpClient) { }
 
-  getAllDeclarationTypes() {
-    const declarationTypesUrl = '../../../assets/api/declarationtypes.json';
+  get data(): Port[] {
+    return this.dataChange.value;
+  }
 
-    return this.http.get<Declarationtype[]>(declarationTypesUrl).pipe(
+  getDialogData() {
+    return this.dialogData;
+  }
+
+   /** CRUD METHODS */
+   getAllPorts(): void {
+
+    const PORTS_URL = '../../../assets/api/ports.json';
+
+    this.http.get<Port[]>(PORTS_URL).subscribe(data => {
+        this.dataChange.next(data);
+      },
+      (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+      });
+  }
+
+  addPort(issue: Port): void {
+    this.dialogData = issue;
+  }
+
+  updatePort(issue: Port): void {
+    this.dialogData = issue;
+  }
+
+  deletePort(id: number): void {
+    console.log(id);
+  }
+
+  getAllDeclarationTypes() {
+    const DECLARATION_TYPES_URL = '../../../assets/api/declarationtypes.json';
+
+    return this.http.get<Declarationtype[]>(DECLARATION_TYPES_URL).pipe(
       tap(this.doGetDeclarationTypes()),
       catchError(this.handleError)
     );
   }
 
   getAllStates() {
-    const states = '../../assets/api/countrygroups.json';
-    return this.http.get<State[]>(states).pipe(
+    const STATES_URL = '../../assets/api/countrygroups.json';
+    return this.http.get<State[]>(STATES_URL).pipe(
       tap(this.doGetStates()),
       catchError(this.handleError));
   }
 
   getAllCountries() {
-    const countries = '../../assets/api/countries.json';
-    return this.http.get<Country[]>(countries).pipe(
+    const COUNTRIES = '../../assets/api/countries.json';
+    return this.http.get<Country[]>(COUNTRIES).pipe(
       tap(this.doGetCountries()),
       catchError(this.handleError));
   }
 
-  randomDelay() {
-    return Math.round(apiLatency + Math.random() * apiJitter);
-  }
 
- private doGetCountries(): (x: Country[]) => void {
+  private doGetCountries(): (x: Country[]) => void {
     return data =>
-    console.log(
-      'The following declaration types were returned: ' + JSON.stringify(data)
-    );
+      console.log(
+        'The following declaration types were returned: ' + JSON.stringify(data)
+      );
   }
 
- private doGetStates(): (x: State[]) => void {
+  private doGetStates(): (x: State[]) => void {
     return data =>
-    console.log(
-      'The following declaration types were returned: ' + JSON.stringify(data)
-    );
+      console.log(
+        'The following declaration types were returned: ' + JSON.stringify(data)
+      );
   }
 
- private doGetDeclarationTypes(): (x: Declarationtype[]) => void {
+  private doGetDeclarationTypes(): (x: Declarationtype[]) => void {
     return data =>
       console.log(
         'The following declaration types were returned: ' + JSON.stringify(data)
@@ -74,7 +104,7 @@ export class GetdataService {
     } else {
       errorMessage = `Server side returned code: ${
         err.status
-      }, error message is: ${err.message}`;
+        }, error message is: ${err.message}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);

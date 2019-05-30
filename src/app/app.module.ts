@@ -13,6 +13,7 @@ import { LookupdialogComponent } from './lookupdialog/lookupdialog.component';
 import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
 import { GridComponent } from './controls/grid/grid.component';
 import { LooukupPopupComponent } from './looukup-popup/looukup-popup.component';
+import { ModalGridComponent } from './controls/modal-grid/modal-grid.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LooukupPopupComponent } from './looukup-popup/looukup-popup.component';
     ControlsComponent,
     LookupdialogComponent,
     GridComponent,
-    LooukupPopupComponent
+    LooukupPopupComponent,
+    ModalGridComponent
   ],
   entryComponents: [
     LookupdialogComponent
