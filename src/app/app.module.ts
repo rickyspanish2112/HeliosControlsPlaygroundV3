@@ -14,6 +14,9 @@ import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
 import { GridComponent } from './controls/grid/grid.component';
 import { LooukupPopupComponent } from './looukup-popup/looukup-popup.component';
 import { ModalGridComponent } from './controls/modal-grid/modal-grid.component';
+import { AddDialogComponent } from './dialogs/add/add.component';
+import { DeleteDialogComponent } from './dialogs/delete/deletedialog.component';
+import { EditDialogComponent } from './dialogs/edit/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +25,16 @@ import { ModalGridComponent } from './controls/modal-grid/modal-grid.component';
     LookupdialogComponent,
     GridComponent,
     LooukupPopupComponent,
-    ModalGridComponent
+    ModalGridComponent,
+    AddDialogComponent,
+    DeleteDialogComponent,
+    EditDialogComponent
   ],
   entryComponents: [
-    LookupdialogComponent
+    LookupdialogComponent,
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
