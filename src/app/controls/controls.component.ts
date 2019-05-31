@@ -34,17 +34,19 @@ export class ControlsComponent implements OnInit {
   selectedCountryName: string;
   codeFilter: string;
   nameFilter: string;
-  countryLookupInput: string;
-  countryModalDialogLookupInput: any;
+  // countryLookupInput: string;
+ //  countryModalDialogLookupInput: any;
 
   typeCtrl = new FormControl();
   stateForm: FormGroup = this.fb.group({
     stateGroup: ''
   });
 
-  countryLookupModalDialogForm = new FormControl();
 
-  countryLookupExpandingDialogForm = new FormControl();
+  countryLookupModalDialogFormControl = new FormControl();
+  countryLookupModalDialogForm: FormGroup = this.fb.group({});
+
+  countryLookupExpandingDialogFormControl = new FormControl();
   countryLookupExpandingDialogFormGroup: FormGroup = this.fb.group({
     countryCodeFC: '',
     countryNameFC: ''
@@ -141,7 +143,7 @@ export class ControlsComponent implements OnInit {
 
   cellClicked(element) {
     this.toggleLookupElement = false;
-    this.countryLookupInput = element.name;
+    this.countryLookupExpandingDialogFormControl.setValue(element.name);
   }
 
   clearAll = () => {
@@ -208,7 +210,7 @@ export class ControlsComponent implements OnInit {
   }
 
  private doSetResult(result: any) {
-    this.countryModalDialogLookupInput  = result;
+    this.countryLookupModalDialogFormControl.setValue(result);
   }
 
   alert(value: string) {

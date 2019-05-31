@@ -44,14 +44,14 @@
 
 <!-- Modal dialog -->
 <form [formGroup]="countryLookupModalDialogForm" class="lookupUpFormControl">
-  <input matInput aria-label="State" [formControl]="countryLookupModalDialogForm" (keyup)="openLookupDialog($event)"
-    class="lookup-input" [(ngModel)]="countryModalDialogLookupInput">
+  <input matInput aria-label="State" [formControl]="countryLookupModalDialogFormControl" (keyup)="openLookupDialog($event)"
+    class="lookup-input">
 </form>
 <br>
 
 <!--  Expanding dialg -->
-<form [formGroup]="countryLookupExpandingDialogForm" class="lookupUpFormControl">
-  <input matInput aria-label="State" [(ngModel)]="countryLookupInput" [formControl]="countryLookupExpandingDialogForm"
+<form class="lookupUpFormControl">
+  <input matInput aria-label="State"  [formControl]="countryLookupExpandingDialogFormControl"
     (keyup)="toggleLookup($event)" class="countryLookup">
   <div *ngIf="toggleLookupElement" class="countryLookup">
 
