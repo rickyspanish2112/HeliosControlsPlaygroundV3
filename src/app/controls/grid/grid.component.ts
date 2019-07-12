@@ -32,9 +32,9 @@ export class GridComponent implements OnInit {
   dataSourceIndex: number;
   tableRowIndex: number;
 
-  @ViewChild(MatTable) table: MatTable<any>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   categories: Type[] = [
     { code: 'Z', description: 'Description 1' },

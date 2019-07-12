@@ -27,9 +27,9 @@ export class ModalGridComponent implements OnInit {
               public dialog: MatDialog,
               public dataService: DataService) { }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('filter', { static: true }) filter: ElementRef;
 
   ngOnInit() {
     this.loadData();
